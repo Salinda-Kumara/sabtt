@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ClassType {
+  LECTURE
+  LAB
+  TUTORIAL
+  EXAM
+}
+
+enum UserRole {
+  ADMIN
+  VIEWER
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole @default(VIEWER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Building {
+  id           String @id @default(cuid())
+  name         String
+  abbreviation String @unique
+  rooms        Room[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Room {
+  id         String          @id @default(cuid())
+  name       String
+  buildingId String
+  building   Building        @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  capacity   Int             @default(30)
+  schedules  ScheduleEntry[]
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@unique([name, buildingId])
+}
+
+model Department {
+  id        String     @id @default(cuid())
+  name      String
+  code      String     @unique
+  color     String     @default("#6366f1")
+  courses   Course[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Lecturer {
+  id           String          @id @default(cuid())
+  name         String
+  email        String          @unique
+  contact      String?
+  profilePic   String?
+  schedules    ScheduleEntry[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+}
+
+model Course {
+  id           String          @id @default(cuid())
+  name         String
+  code         String          @unique
+  departmentId String
+  department   Department      @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  classType    ClassType       @default(LECTURE)
+  schedules    ScheduleEntry[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+}
+
+enum SessionMode {
+  PHYSICAL
+  ONLINE
+  HYBRID
+}
+
+model ScheduleEntry {
+  id          String      @id @default(cuid())
+  courseId     String
+  course      Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  roomId      String
+  room        Room        @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  lecturerId  String
+  lecturer    Lecturer    @relation(fields: [lecturerId], references: [id], onDelete: Cascade)
+  dayOfWeek   DayOfWeek
+  startTime   String      // "HH:MM" format (e.g., "09:00")
+  endTime     String      // "HH:MM" format (e.g., "11:00")
+  batch       String      @default("")
+  weekNumber  Int         @default(1)
+  sessionMode SessionMode @default(PHYSICAL)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([dayOfWeek])
+  @@index([roomId, dayOfWeek])
+  @@index([lecturerId, dayOfWeek])
+}
+
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
