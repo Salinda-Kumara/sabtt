@@ -90,14 +90,14 @@ router.put('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Resp
         const { courseId, roomId, lecturerId, dayOfWeek, startTime, endTime, batch, weekNumber, sessionMode } = req.body;
 
         // Check conflicts (exclude current entry)
-        const conflicts = await checkConflicts({ roomId, lecturerId, dayOfWeek, startTime, endTime }, req.params.id);
+        const conflicts = await checkConflicts({ roomId, lecturerId, dayOfWeek, startTime, endTime }, req.params.id as string);
         if (conflicts.length > 0) {
             res.status(409).json({ error: 'Schedule conflict detected.', conflicts });
             return;
         }
 
         const entry = await prisma.scheduleEntry.update({
-            where: { id: req.params.id },
+            where: { id: req.params.id as string },
             data: { courseId, roomId, lecturerId, dayOfWeek, startTime, endTime, batch: batch || '', weekNumber: weekNumber || 1, sessionMode: sessionMode || 'PHYSICAL' },
             include: {
                 course: { include: { department: true } },
@@ -116,7 +116,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Resp
 // DELETE /api/schedules/:id
 router.delete('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Response) => {
     try {
-        await prisma.scheduleEntry.delete({ where: { id: req.params.id } });
+        await prisma.scheduleEntry.delete({ where: { id: req.params.id as string } });
         req.app.get('io')?.emit('schedule-changed', { deleted: req.params.id });
         res.status(204).send();
     } catch (error) {

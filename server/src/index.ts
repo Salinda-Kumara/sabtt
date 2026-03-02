@@ -14,6 +14,7 @@ import courseRoutes from './routes/courses.js';
 import scheduleRoutes from './routes/schedules.js';
 import dashboardRoutes from './routes/dashboard.js';
 import settingRoutes from './routes/settings.js';
+import batchRoutes from './routes/batches.js';
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/schedules', scheduleRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/settings', settingRoutes);
+app.use('/api/batches', batchRoutes);
 
 // Socket.IO connection
 io.on('connection', (socket) => {

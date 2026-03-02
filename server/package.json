@@ -18,7 +18,8 @@
         "dotenv": "^16.4.7",
         "express": "^4.21.2",
         "jsonwebtoken": "^9.0.2",
-        "socket.io": "^4.8.1"
+        "socket.io": "^4.8.1",
+        "xlsx": "^0.18.5"
     },
     "devDependencies": {
         "@types/bcryptjs": "^2.4.6",
@@ -27,7 +28,7 @@
         "@types/jsonwebtoken": "^9.0.9",
         "@types/node": "^22.13.5",
         "prisma": "^6.4.1",
-        "tsx": "^4.19.2",
+        "tsx": "^4.21.0",
         "typescript": "^5.7.3"
     }
 }

@@ -72,14 +72,14 @@ async function main() {
 
     // Lecturers
     const lecturers = await Promise.all([
-        prisma.lecturer.create({ data: { name: 'Dr. Sarah Chen', email: 'schen@university.edu', departmentId: csDept.id } }),
-        prisma.lecturer.create({ data: { name: 'Prof. James Wilson', email: 'jwilson@university.edu', departmentId: csDept.id } }),
-        prisma.lecturer.create({ data: { name: 'Dr. Maria Garcia', email: 'mgarcia@university.edu', departmentId: eeDept.id } }),
-        prisma.lecturer.create({ data: { name: 'Prof. Robert Kim', email: 'rkim@university.edu', departmentId: eeDept.id } }),
-        prisma.lecturer.create({ data: { name: 'Dr. Emily Thompson', email: 'ethompson@university.edu', departmentId: phDept.id } }),
-        prisma.lecturer.create({ data: { name: 'Prof. David Brown', email: 'dbrown@university.edu', departmentId: phDept.id } }),
-        prisma.lecturer.create({ data: { name: 'Dr. Lisa Anderson', email: 'landerson@university.edu', departmentId: enDept.id } }),
-        prisma.lecturer.create({ data: { name: 'Prof. Michael Davis', email: 'mdavis@university.edu', departmentId: enDept.id } }),
+        prisma.lecturer.create({ data: { name: 'Dr. Sarah Chen', email: 'schen@university.edu' } }),
+        prisma.lecturer.create({ data: { name: 'Prof. James Wilson', email: 'jwilson@university.edu' } }),
+        prisma.lecturer.create({ data: { name: 'Dr. Maria Garcia', email: 'mgarcia@university.edu' } }),
+        prisma.lecturer.create({ data: { name: 'Prof. Robert Kim', email: 'rkim@university.edu' } }),
+        prisma.lecturer.create({ data: { name: 'Dr. Emily Thompson', email: 'ethompson@university.edu' } }),
+        prisma.lecturer.create({ data: { name: 'Prof. David Brown', email: 'dbrown@university.edu' } }),
+        prisma.lecturer.create({ data: { name: 'Dr. Lisa Anderson', email: 'landerson@university.edu' } }),
+        prisma.lecturer.create({ data: { name: 'Prof. Michael Davis', email: 'mdavis@university.edu' } }),
     ]);
     console.log('  ✅ 8 Lecturers created');
 

@@ -15,7 +15,8 @@ import {
     X,
     ExternalLink,
     Sun,
-    Moon
+    Moon,
+    Layers
 } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -25,6 +26,7 @@ const navItems = [
     { to: '/admin/rooms', icon: Building2, label: 'Rooms & Buildings' },
     { to: '/admin/courses', icon: BookOpen, label: 'Courses' },
     { to: '/admin/lecturers', icon: Users, label: 'Lecturers' },
+    { to: '/admin/batches', icon: Layers, label: 'Batches' },
     { to: '/admin/settings', icon: Settings, label: 'Settings' },
 ];
 

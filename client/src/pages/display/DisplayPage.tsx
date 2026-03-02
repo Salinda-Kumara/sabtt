@@ -220,10 +220,17 @@ export default function DisplayPage() {
                                     {currentClass && (
                                         <div className="px-5 py-4 bg-emerald-50 dark:bg-emerald-500/[0.04] transition-colors">
                                             <div className="flex items-center gap-2 mb-2">
-                                                <div className="w-1 h-8 rounded-full" style={{ backgroundColor: currentClass.course.department.color }} />
-                                                <div>
-                                                    <p className="font-bold text-lg leading-tight text-slate-900 dark:text-white transition-colors">{currentClass.course.name}</p>
-                                                    <p className="text-sm text-slate-600 dark:text-white/50 transition-colors">{currentClass.course.code} · {currentClass.lecturer.name}</p>
+                                                <div className="w-1 h-12 rounded-full" style={{ backgroundColor: currentClass.course.department.color }} />
+                                                <div className="flex-1">
+                                                    <div className="flex justify-between items-start gap-2">
+                                                        <p className="font-bold text-lg leading-tight text-slate-900 dark:text-white transition-colors">{currentClass.course.name}</p>
+                                                        {currentClass.batch && (
+                                                            <span className="shrink-0 px-2 py-1 text-sm font-bold rounded-lg shadow-sm border" style={{ backgroundColor: `${currentClass.course.department.color}15`, color: currentClass.course.department.color, borderColor: `${currentClass.course.department.color}30` }}>
+                                                                {currentClass.batch}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <p className="text-sm text-slate-600 dark:text-white/50 transition-colors mt-1">{currentClass.course.code} · {currentClass.lecturer.name}</p>
                                                 </div>
                                             </div>
                                             <div className="flex items-center justify-between text-xs text-slate-500 dark:text-white/40 mt-3 transition-colors">
@@ -244,10 +251,17 @@ export default function DisplayPage() {
                                         <div className={`px-5 py-3 ${currentClass ? 'border-t border-slate-100 dark:border-white/[0.04]' : ''} transition-colors`}>
                                             <p className="text-[10px] font-semibold text-amber-600 dark:text-amber-400/70 uppercase tracking-wider mb-1.5 transition-colors">Next Up</p>
                                             <div className="flex items-center gap-2">
-                                                <div className="w-1 h-6 rounded-full" style={{ backgroundColor: nextClass.course.department.color }} />
-                                                <div>
-                                                    <p className="font-semibold text-sm text-slate-900 dark:text-white transition-colors">{nextClass.course.name}</p>
-                                                    <p className="text-xs text-slate-500 dark:text-white/40 transition-colors">
+                                                <div className="w-1 h-8 rounded-full" style={{ backgroundColor: nextClass.course.department.color }} />
+                                                <div className="flex-1">
+                                                    <div className="flex justify-between items-start gap-2">
+                                                        <p className="font-semibold text-sm text-slate-900 dark:text-white transition-colors">{nextClass.course.name}</p>
+                                                        {nextClass.batch && (
+                                                            <span className="shrink-0 text-xs font-bold px-1.5 py-0.5 rounded border" style={{ backgroundColor: `${nextClass.course.department.color}10`, color: nextClass.course.department.color, borderColor: `${nextClass.course.department.color}20` }}>
+                                                                {nextClass.batch}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <p className="text-xs text-slate-500 dark:text-white/40 transition-colors mt-0.5">
                                                         {nextClass.startTime} - {nextClass.endTime} · {nextClass.lecturer.name}
                                                     </p>
                                                 </div>

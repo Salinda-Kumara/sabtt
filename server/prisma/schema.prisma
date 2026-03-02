@@ -40,9 +40,9 @@ model User {
 }
 
 model Building {
-  id           String @id @default(cuid())
+  id           String   @id @default(cuid())
   name         String
-  abbreviation String @unique
+  abbreviation String   @unique
   rooms        Room[]
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -62,24 +62,24 @@ model Room {
 }
 
 model Department {
-  id        String     @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
-  code      String     @unique
-  color     String     @default("#6366f1")
+  code      String   @unique
+  color     String   @default("#6366f1")
   courses   Course[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Lecturer {
-  id           String          @id @default(cuid())
-  name         String
-  email        String          @unique
-  contact      String?
-  profilePic   String?
-  schedules    ScheduleEntry[]
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
+  id         String          @id @default(cuid())
+  name       String
+  email      String          @unique
+  contact    String?
+  profilePic String?
+  schedules  ScheduleEntry[]
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
 }
 
 model Course {
@@ -102,15 +102,15 @@ enum SessionMode {
 
 model ScheduleEntry {
   id          String      @id @default(cuid())
-  courseId     String
+  courseId    String
   course      Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
   roomId      String
   room        Room        @relation(fields: [roomId], references: [id], onDelete: Cascade)
   lecturerId  String
   lecturer    Lecturer    @relation(fields: [lecturerId], references: [id], onDelete: Cascade)
   dayOfWeek   DayOfWeek
-  startTime   String      // "HH:MM" format (e.g., "09:00")
-  endTime     String      // "HH:MM" format (e.g., "11:00")
+  startTime   String // "HH:MM" format (e.g., "09:00")
+  endTime     String // "HH:MM" format (e.g., "11:00")
   batch       String      @default("")
   weekNumber  Int         @default(1)
   sessionMode SessionMode @default(PHYSICAL)
@@ -126,4 +126,12 @@ model Setting {
   id    String @id @default(cuid())
   key   String @unique
   value String
+}
+
+model Batch {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  color     String   @default("#3b82f6")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

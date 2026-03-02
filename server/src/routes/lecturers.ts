@@ -37,7 +37,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Resp
     try {
         const { name, email, contact, profilePic } = req.body;
         const lecturer = await prisma.lecturer.update({
-            where: { id: req.params.id },
+            where: { id: req.params.id as string },
             data: { name, email, contact: contact || null, profilePic: profilePic || null },
         });
         req.app.get('io')?.emit('data-changed', { type: 'lecturers' });
@@ -51,7 +51,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Resp
 // DELETE /api/lecturers/:id
 router.delete('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Response) => {
     try {
-        await prisma.lecturer.delete({ where: { id: req.params.id } });
+        await prisma.lecturer.delete({ where: { id: req.params.id as string } });
         req.app.get('io')?.emit('data-changed', { type: 'lecturers' });
         res.status(204).send();
     } catch (error) {

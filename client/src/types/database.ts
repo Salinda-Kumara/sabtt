@@ -28,6 +28,14 @@ export interface Department {
     updatedAt: string;
 }
 
+export interface Batch {
+    id: string;
+    name: string;
+    color: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export interface Lecturer {
     id: string;
     name: string;

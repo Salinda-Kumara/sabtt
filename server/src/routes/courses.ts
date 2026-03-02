@@ -39,7 +39,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Resp
     try {
         const { name, code, departmentId, classType } = req.body;
         const course = await prisma.course.update({
-            where: { id: req.params.id },
+            where: { id: req.params.id as string },
             data: { name, code, departmentId, classType },
             include: { department: true },
         });
@@ -54,7 +54,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Resp
 // DELETE /api/courses/:id
 router.delete('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Response) => {
     try {
-        await prisma.course.delete({ where: { id: req.params.id } });
+        await prisma.course.delete({ where: { id: req.params.id as string } });
         req.app.get('io')?.emit('data-changed', { type: 'courses' });
         res.status(204).send();
     } catch (error) {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
-import type { ScheduleEntry, Course, Room, Lecturer, Building, DayOfWeek, SessionMode } from '@/types/database';
+import type { ScheduleEntry, Course, Room, Lecturer, Building, DayOfWeek, SessionMode, Batch } from '@/types/database';
 import { Calendar, Plus, Filter, X, AlertTriangle, ChevronLeft, ChevronRight, LayoutGrid, CalendarDays, Download } from 'lucide-react';
 import { exportSchedulePdf } from '@/lib/exportSchedulePdf';
 
@@ -21,6 +21,7 @@ export default function SchedulePage() {
     const [rooms, setRooms] = useState<Room[]>([]);
     const [buildings, setBuildings] = useState<Building[]>([]);
     const [lecturers, setLecturers] = useState<Lecturer[]>([]);
+    const [batches, setBatches] = useState<Batch[]>([]);
     const [loading, setLoading] = useState(true);
     const [universityName, setUniversityName] = useState('University of Technology');
 
@@ -60,13 +61,14 @@ export default function SchedulePage() {
 
     const fetchData = async () => {
         try {
-            const [sRes, cRes, rRes, bRes, lRes, settRes] = await Promise.all([
+            const [sRes, cRes, rRes, bRes, lRes, settRes, batchRes] = await Promise.all([
                 api.get('/schedules'),
                 api.get('/courses'),
                 api.get('/rooms'),
                 api.get('/buildings'),
                 api.get('/lecturers'),
                 api.get('/settings'),
+                api.get('/batches'),
             ]);
             setSchedules(sRes.data);
             setCourses(cRes.data);
@@ -74,6 +76,7 @@ export default function SchedulePage() {
             setUniversityName(settRes.data.universityName || 'University of Technology');
             setBuildings(bRes.data);
             setLecturers(lRes.data);
+            setBatches(batchRes.data);
         } catch (err) { console.error(err); }
         finally { setLoading(false); }
     };
@@ -647,7 +650,10 @@ export default function SchedulePage() {
                             <div className="grid grid-cols-3 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 transition-colors">Batch</label>
-                                    <input type="text" value={formBatch} onChange={(e) => setFormBatch(e.target.value)} className="w-full px-3 py-2 bg-transparent text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors" placeholder="e.g. Batch A" />
+                                    <select value={formBatch} onChange={(e) => setFormBatch(e.target.value)} className="w-full px-3 py-2 bg-transparent text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors">
+                                        <option value="" className="dark:bg-slate-900">None</option>
+                                        {batches.map(b => <option key={b.id} value={b.name} className="dark:bg-slate-900">{b.name}</option>)}
+                                    </select>
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 transition-colors">Week Number</label>

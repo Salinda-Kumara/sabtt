@@ -9,6 +9,7 @@ import SchedulePage from '@/pages/admin/SchedulePage';
 import RoomsPage from '@/pages/admin/RoomsPage';
 import CoursesPage from '@/pages/admin/CoursesPage';
 import LecturersPage from '@/pages/admin/LecturersPage';
+import BatchesPage from '@/pages/admin/BatchesPage';
 import SettingsPage from '@/pages/admin/SettingsPage';
 import DisplayPage from '@/pages/display/DisplayPage';
 
@@ -37,6 +38,7 @@ export default function App() {
               <Route path="rooms" element={<RoomsPage />} />
               <Route path="courses" element={<CoursesPage />} />
               <Route path="lecturers" element={<LecturersPage />} />
+              <Route path="batches" element={<BatchesPage />} />
               <Route path="settings" element={<SettingsPage />} />
             </Route>
 

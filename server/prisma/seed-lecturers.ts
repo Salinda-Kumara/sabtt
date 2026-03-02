@@ -97,7 +97,6 @@ async function main() {
             data: {
                 name: lec.name,
                 email,
-                departmentId: deptId,
             },
         });
         lecCreated++;

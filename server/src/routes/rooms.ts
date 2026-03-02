@@ -39,7 +39,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Resp
     try {
         const { name, buildingId, capacity } = req.body;
         const room = await prisma.room.update({
-            where: { id: req.params.id },
+            where: { id: req.params.id as string },
             data: { name, buildingId, capacity },
             include: { building: true },
         });
@@ -54,7 +54,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Resp
 // DELETE /api/rooms/:id
 router.delete('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Response) => {
     try {
-        await prisma.room.delete({ where: { id: req.params.id } });
+        await prisma.room.delete({ where: { id: req.params.id as string } });
         req.app.get('io')?.emit('data-changed', { type: 'rooms' });
         res.status(204).send();
     } catch (error) {

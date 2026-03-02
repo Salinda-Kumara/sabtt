@@ -22,7 +22,7 @@ router.get('/', async (_req: Request, res: Response) => {
 router.get('/:id', async (req: Request, res: Response) => {
     try {
         const building = await prisma.building.findUnique({
-            where: { id: req.params.id },
+            where: { id: req.params.id as string },
             include: { rooms: { include: { schedules: { include: { course: { include: { department: true } }, lecturer: true } } } } },
         });
         if (!building) {
@@ -57,7 +57,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Resp
     try {
         const { name, abbreviation } = req.body;
         const building = await prisma.building.update({
-            where: { id: req.params.id },
+            where: { id: req.params.id as string },
             data: { name, abbreviation },
             include: { rooms: true },
         });
@@ -72,7 +72,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Resp
 // DELETE /api/buildings/:id
 router.delete('/:id', authMiddleware, adminOnly, async (req: AuthRequest, res: Response) => {
     try {
-        await prisma.building.delete({ where: { id: req.params.id } });
+        await prisma.building.delete({ where: { id: req.params.id as string } });
         req.app.get('io')?.emit('data-changed', { type: 'buildings' });
         res.status(204).send();
     } catch (error) {
